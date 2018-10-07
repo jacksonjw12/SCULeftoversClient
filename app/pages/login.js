@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, View} from 'react-native';
+import {Button, Text, View} from 'react-native';
 
 export class LoginScreen extends React.Component {
     static navigationOptions = {
@@ -12,6 +12,15 @@ export class LoginScreen extends React.Component {
           <Button
             title="Login"
             onPress={() =>
+              navigate('Feed')
+            }
+          />
+
+          <Text>Don't have an account?</Text>
+
+          <Button 
+            title="Sign Up"
+            onPress={() => 
               navigate('Feed')
             }
           />
