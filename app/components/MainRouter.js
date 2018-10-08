@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import { Text,View,TouchableOpacity } from 'react-native';
+import { Text,View,TouchableOpacity,Image, StyleSheet } from 'react-native';
 import Feed from './Routes/Feed'
 import Compose from './Routes/Compose'
 import Settings from './Routes/Settings'
+import Icon from "./Common/Icon";
 
 export default class MainRouter extends Component {
     constructor(props){
@@ -52,11 +53,20 @@ export default class MainRouter extends Component {
     render(){
         return (
             <View style={{flex:1}}>
-                <View style={{height:"90%",backgroundColor:"white"}}>{this.renderView()}</View>
-                <View style={{height:"10%",flexDirection:"row"}}>
-                    <TouchableOpacity onPress={()=>this.navigate("compose")} style={{backgroundColor:"red",flex:1}} />
-                    <TouchableOpacity onPress={()=>this.navigate("feed")} style={{backgroundColor:"green",flex:1}} />
-                    <TouchableOpacity onPress={()=>this.navigate("settings")} style={{backgroundColor:"blue",flex:1}} />
+                <View style={{height:"92%",backgroundColor:"white"}}>{this.renderView()}</View>
+                <View style={{height:"8%",flexDirection:"row", borderTopColor:"black",borderTopWidth:1}}>
+                    <TouchableOpacity onPress={()=>this.navigate("compose")} style={{backgroundColor:"white",flex:1}}>
+                        <Icon icon={"compose"} size={60}/>
+                        {/*<Image style={styles.bottomIcon} source={require('../images/compose.png')} />*/}
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.navigate("feed")} style={{backgroundColor:"white",flex:1}} >
+                        <Icon icon={"feed"} size={50}/>
+                        {/*<Image style={styles.bottomIcon} source={require('../images/home.png')} />*/}
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={()=>this.navigate("settings")} style={{backgroundColor:"white",flex:1}} >
+                        <Icon icon={"settings"} size={50}/>
+                        {/*<Image style={styles.bottomIcon} source={require('../images/settings.png')} />*/}
+                    </TouchableOpacity>
                 </View>
             </View>
         )
@@ -64,3 +74,13 @@ export default class MainRouter extends Component {
 
 
 }
+
+const styles = StyleSheet.create({
+    bottomIcon: {
+        flex:1,
+        width:50,
+        height:50,
+
+
+    }
+})
