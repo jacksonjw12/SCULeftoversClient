@@ -7,7 +7,7 @@ import {SettingsScreen} from './components/Routes/Settings';
 import { ApolloProvider } from 'react-apollo';
 import RootRouter from './components/RootRouter'
 import {createSwitchNavigator, createBottomTabNavigator} from 'react-navigation';
-import {client} from '../index'
+import createClient from './apollo/getClient'
 //
 // const TabNavigator = createBottomTabNavigator({
 //   Feed: { screen: FeedScreen },
@@ -19,16 +19,18 @@ import {client} from '../index'
 //   Login: LoginScreen,
 //   Home: TabNavigator
 // });
-
+const client = createClient()
 export default class App extends Component {
+
   render() {
-      return(
-          <RootRouter />
-      )
-	  // return (
-      //   <ApolloProvider client={client}>
-      //       <AppNavigator />
-      //   </ApolloProvider>
-      //
-	  // );
+      // return(
+      //     <RootRouter />
+      // )
+
+	  return (
+        <ApolloProvider client={client}>
+            <RootRouter />
+        </ApolloProvider>
+
+	  );
 }}

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Text, View, TextInput,AsyncStorage} from 'react-native';
+import {Button, Text, View, TextInput,AsyncStorage,TouchableOpacity,StyleSheet} from 'react-native';
 
 export default class Login extends React.Component {
     constructor(props) {
@@ -74,20 +74,45 @@ export default class Login extends React.Component {
                 value={this.state.passwordText}
                 secureTextEntry={true}
             />
-            <Button
+
+            <TouchableOpacity
                 onPress={this.login}
-                title="Log In"
-                color="teal"
-                accessibilityLabel="Log In"
-            />
-            <Button
-                onPress={()=>this.props.navigate("home")}
-                title="Back"
-                backgroundColor="#fcc000"
-                color="white"
-                accessibilityLabel="Back"
-            />
+                underlayColor='#fff'
+                style={[styles.button,styles.largeButton,{backgroundColor:"teal"}]}
+            >
+                <Text style={styles.innerButton}>Log In</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                onPress={()=>this.props.navigate("main")}
+                underlayColor='#fff'
+                style={[styles.button,styles.largeButton,{backgroundColor:"#fcc000"}]}
+            >
+                <Text style={styles.innerButton}>Back</Text>
+            </TouchableOpacity>
             </View>
         )
     }
   }
+
+const styles = StyleSheet.create({
+    button: {
+        marginRight:40,
+        marginLeft:40,
+        marginTop:10,
+        paddingTop:10,
+        paddingBottom:10,
+        borderRadius:10,
+        borderWidth: 1,
+        borderColor: '#fff',
+
+
+    },
+    largeButton: {
+      width:"60%"
+    },
+    innerButton: {
+        textAlign:"center",
+        color:"white"
+    }
+
+})

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Text } from 'react-native';
+import { Text, AsyncStorage } from 'react-native';
 import UnAuthorizedRouter from './UnAuthorizedRouter'
 import MainRouter from './MainRouter'
 export default class RootRouter extends Component {
@@ -13,6 +13,46 @@ export default class RootRouter extends Component {
            user:this.user,
         }
         this.handleLogin = this.handleLogin.bind(this)
+        this.handleLogout = this.handleLogout.bind(this)
+
+
+
+    }
+    async componentDidMount() {
+        const email = await AsyncStorage.getItem('email')
+        const password = await AsyncStorage.getItem('password')
+        if(email && password){//login
+            this.login(email,password,this.handleLogin)
+        }
+    }
+    login(email,password,callback){
+
+        fetch(`http://localhost:8000/login?email=${email}&password=${password}`, {
+          credentials: 'same-origin',
+        })
+          .then(response => response.json())
+          .then((response) => {
+              console.log(response)
+
+
+             if (response && response.id) {
+              //Keyboard.dismiss()
+               AsyncStorage.setItem('email', email)
+               AsyncStorage.setItem('password', password)
+               AsyncStorage.setItem('id', response.id)
+
+                console.log("logged in")
+
+                 callback(response.id,email)
+
+            } else {
+                console.log("failed login1")
+            }
+          })
+          .catch((error) => {
+              console.log(error)
+              console.log("failed login2")
+          })
     }
     navigate(location){
         if(this.state.loggedIn){
@@ -20,7 +60,7 @@ export default class RootRouter extends Component {
         }
 
     }
-    handleLogin(id,email,verified=false,onBoarded=true){
+    async handleLogin(id,email,verified=false,onBoarded=true){
         const username = email.split('@')[0]
         this.user = {
             id,
@@ -35,8 +75,15 @@ export default class RootRouter extends Component {
         })
 
     }
-    handleLogout(logout){
-        this.setState({loggedIn:false})
+    async handleLogout(logout){
+        this.user = {}
+        await AsyncStorage.removeItem('email')
+        await AsyncStorage.removeItem('password')
+        await AsyncStorage.removeItem('id')
+
+        this.setState({loggedIn:false,view:"unAuthorizedRouter"})
+
+
 
     }
     handleSignUp(signUp){

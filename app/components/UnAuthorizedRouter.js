@@ -56,7 +56,9 @@ export default class UnAuthorizedRouter extends React.Component {
         }
         else{
             return (
+                <View style={{flex:1,justifyContent:"center"}}>
                 <Text>Invalid UnAuthorizedRouter View {this.state.view}</Text>
+                </View>
             )
         }
     }
