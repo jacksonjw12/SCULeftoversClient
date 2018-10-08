@@ -1,26 +1,34 @@
 import React, {Component} from 'react';
 
 import {LoginScreen} from './pages/login';
-import {FeedScreen} from './pages/feed';
-import {NewPostScreen} from './pages/newPost';
-import {SettingsScreen} from './pages/settings';
-
+import {FeedScreen} from './components/Routes/Feed';
+import {NewPostScreen} from './components/Routes/Compose';
+import {SettingsScreen} from './components/Routes/Settings';
+import { ApolloProvider } from 'react-apollo';
+import RootRouter from './components/RootRouter'
 import {createSwitchNavigator, createBottomTabNavigator} from 'react-navigation';
+import {client} from '../index'
+//
+// const TabNavigator = createBottomTabNavigator({
+//   Feed: { screen: FeedScreen },
+//   NewPost: { screen: NewPostScreen },
+//   Settings: { screen: SettingsScreen}
+// });
 
-const TabNavigator = createBottomTabNavigator({
-  Feed: { screen: FeedScreen },
-  NewPost: { screen: NewPostScreen },
-  Settings: { screen: SettingsScreen}
-});
-
-const AppNavigator = createSwitchNavigator({
-  Login: LoginScreen,
-  Home: TabNavigator
-});
+// const AppNavigator = createSwitchNavigator({
+//   Login: LoginScreen,
+//   Home: TabNavigator
+// });
 
 export default class App extends Component {
   render() {
-	  return (
-      <AppNavigator />
-	  );
+      return(
+          <RootRouter />
+      )
+	  // return (
+      //   <ApolloProvider client={client}>
+      //       <AppNavigator />
+      //   </ApolloProvider>
+      //
+	  // );
 }}
