@@ -56,15 +56,15 @@ export default class MainRouter extends Component {
                 <View style={{height:"92%",backgroundColor:"white"}}>{this.renderView()}</View>
                 <View style={{height:"8%",flexDirection:"row", borderTopColor:"black",borderTopWidth:1}}>
                     <TouchableOpacity onPress={()=>this.navigate("compose")} style={{backgroundColor:"white",flex:1}}>
-                        <Icon icon={"compose"} size={60}/>
+                        <Icon icon={"compose"} color={this.state.view === "compose" ? "#9d2235":undefined} size={60}/>
                         {/*<Image style={styles.bottomIcon} source={require('../images/compose.png')} />*/}
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.navigate("feed")} style={{backgroundColor:"white",flex:1}} >
-                        <Icon icon={"feed"} size={50}/>
+                        <Icon icon={"feed"} color={this.state.view === "feed" ? "#9d2235":undefined} size={50}/>
                         {/*<Image style={styles.bottomIcon} source={require('../images/home.png')} />*/}
                     </TouchableOpacity>
                     <TouchableOpacity onPress={()=>this.navigate("settings")} style={{backgroundColor:"white",flex:1}} >
-                        <Icon icon={"settings"} size={50}/>
+                        <Icon icon={"settings"} color={this.state.view === "settings" ? "#9d2235":undefined} size={50}/>
                         {/*<Image style={styles.bottomIcon} source={require('../images/settings.png')} />*/}
                     </TouchableOpacity>
                 </View>
