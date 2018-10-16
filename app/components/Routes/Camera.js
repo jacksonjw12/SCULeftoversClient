@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {
-    Slider,
     StyleSheet,
     Text,
     TouchableOpacity,
@@ -96,6 +95,10 @@ export default class RNCameraScreen extends React.Component {
     });
   }
 
+  goBack() {
+    this.props.navigate('Compose');
+  }
+
   setFocusDepth(depth) {
     this.setState({
       depth,
@@ -145,6 +148,9 @@ export default class RNCameraScreen extends React.Component {
           {/* <TouchableOpacity style={styles.flipButton} onPress={this.toggleFacing.bind(this)}>
             <Text style={styles.flipText}> FLIP </Text>
           </TouchableOpacity> */}
+          <TouchableOpacity style={styles.flipButton} onPress={this.goBack.bind(this)}>
+            <Text style={{color:'white', fontSize:30}}>  &#8629; </Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.flipButton} onPress={this.toggleFlash.bind(this)}>
             <Text style={styles.flipText}> FLASH: {this.state.flash} </Text>
           </TouchableOpacity>
@@ -238,6 +244,20 @@ const styles = StyleSheet.create({
       flex: 1,
       flexDirection: 'row',
       flexWrap: 'wrap',
+    },
+    backButton: {
+      flex: 0.3,
+      height: 40,
+      width: 20,
+      marginHorizontal: 2,
+      marginBottom: 10,
+      marginTop: 10,
+      borderRadius: 8,
+      borderColor: 'white',
+      borderWidth: 1,
+      padding: 5,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     flipButton: {
       flex: 0.3,

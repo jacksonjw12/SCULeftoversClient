@@ -48,7 +48,7 @@ export default class ComposeRouter extends Component {
                     <View style={{flex:1,alignItems:'center'}}>
                         <View style={{height:"40%",backgroundColor:"white", justifyContent: 'center'}}>
                             <ImageBackground
-                                style={{width: 250, height: 250}}
+                                style={{width: 200, height: 200}}
                                 source={{uri: this.state.pictureURI}}
                                 >
                                 <View style={{position: 'absolute',right: 5,top: 5}}>
@@ -73,12 +73,6 @@ export default class ComposeRouter extends Component {
                         navigate={this.navigate}
                         _handlePictureTaken={this._handlePictureTaken}
                     />
-                    <Button
-                        title="Back"
-                        onPress={() => 
-                            this.navigate('Compose')
-                        }
-                    />
                 </View>
 
             )
@@ -86,7 +80,7 @@ export default class ComposeRouter extends Component {
             return (
                 <View style={{flex:1}}>
                     <ImageBackground
-                        style={{flex: 1, resizeMode: 'cover'}}
+                        style={{width:'100%',height:'100%', resizeMode: 'cover'}}
                         source={{uri: this.state.pictureURI}}
                     >
                     <View style={{position: 'absolute',left: 5,top: 5}}>
