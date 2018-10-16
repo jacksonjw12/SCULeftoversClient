@@ -13,3 +13,10 @@
 >        - Main Router<br>
 >            - For the main pages<br>
 >    - Also Apollo and Graphql setup pointed to hardcoded local<br>
+
+### 10/16/18
+>   - New compose router route to navigate between camera screen and compose screen<br>
+>   - Added react native camera packages to enable camera access<br>
+>   - New camera screen<br>
+>       - Some features like autofocus and whitebalance temporarily commented out <br>
+>   - Still making formatting tweaks, like the back button on the camera screen<br>
