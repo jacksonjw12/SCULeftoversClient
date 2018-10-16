@@ -17,6 +17,7 @@
     "react": "16.5.0",
     "react-apollo": "^2.2.4",
     "react-native": "0.57.1",
+    "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-router-flux": "4.0.5",
     "react-native-svg": "^7.0.3",
     "react-navigation": "2.17.0"
