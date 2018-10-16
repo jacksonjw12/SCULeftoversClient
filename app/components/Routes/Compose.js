@@ -1,14 +1,45 @@
 import React, {Component} from 'react';
-import {Text,TouchableOpacity, TextInput, View} from 'react-native';
+import {Button, ImageBackground,Text,TouchableOpacity, TextInput, View} from 'react-native';
+import Icon from "../Common/Icon";
 export default class Compose extends React.Component {
   state = {
     title: '',
     description: '',
     tags: []
   }
+
   render() {
+    let picture;
+    if (this.props.pictureURI === ''){
+      picture = <View style={{height:"45%",backgroundColor:"white", justifyContent: 'center'}}>
+                    <TouchableOpacity 
+                    onPress={()=>this.props.navigate("Camera")} 
+                    style={{backgroundColor:"white",flex:1}}>  
+                        <Text style={{top: 75, textAlign: 'center'}}>Add a picture</Text>
+                        <Icon icon={"compose"} />
+                    </TouchableOpacity>
+                </View>;
+    } else {
+      picture = <View style={{height:"45%",backgroundColor:"white", justifyContent: 'center'}}>
+                  <ImageBackground
+                      style={{width: 200, height: 200}}
+                      source={{uri: this.props.pictureURI}}
+                      >
+                      <View style={{position: 'absolute',right: 5,top: 5}}>
+                          <Button
+                              title="x"
+                              onPress={() => {
+                                  this.props.navigate('Compose');
+                                  this.props._handlePictureTaken('');
+                              }}
+                          />  
+                      </View>
+                  </ImageBackground>
+                </View> ;
+    }
     return (
       <View style={{alignItems:'center'}}>
+        {picture}
         <View style={{padding: 5, width:100, height: 75, justifyContent:'center'}}>
           <TextInput 
             style={{height: 30, borderColor: 'gray', borderWidth: 1, textAlign: 'center'}}

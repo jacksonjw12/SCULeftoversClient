@@ -28,44 +28,17 @@ export default class ComposeRouter extends Component {
       }
 
     render(){
+        // let picture;
         if (this.state.view === 'Compose') {
-            if (this.state.pictureURI === '') {
-                return (
-                    <View style={{flex:1,alignItems:'center'}}>
-                        <View style={{height:"40%",backgroundColor:"white", justifyContent: 'center'}}>
-                            <TouchableOpacity 
-                            onPress={()=>this.navigate("Camera")} 
-                            style={{backgroundColor:"white",flex:1}}>  
-                                <Text style={{top: 75, textAlign: 'center'}}>Add a picture</Text>
-                                <Icon icon={"compose"} />
-                            </TouchableOpacity>
-                        </View>
-                        <Compose/>
-                    </View>
-                )
-            } else {
-                return(
-                    <View style={{flex:1,alignItems:'center'}}>
-                        <View style={{height:"40%",backgroundColor:"white", justifyContent: 'center'}}>
-                            <ImageBackground
-                                style={{width: 200, height: 200}}
-                                source={{uri: this.state.pictureURI}}
-                                >
-                                <View style={{position: 'absolute',right: 5,top: 5}}>
-                                    <Button
-                                        title="x"
-                                        onPress={() => {
-                                            this.navigate('Compose');
-                                            this._handlePictureTaken('');
-                                        }}
-                                    />  
-                                </View>
-                            </ImageBackground>
-                        </View>
-                        <Compose/>
-                    </View>
-                )
-            }
+            return(
+                <View style={{flex:1,alignItems:'center'}}>
+                    <Compose
+                        navigate={this.navigate}
+                        pictureURI={this.state.pictureURI}
+                        _handlePictureTaken={this._handlePictureTaken}
+                    />
+                </View>
+            )
         } else if (this.state.view === 'Camera') {
             return (
                 <View style = {{flex:1}}>
