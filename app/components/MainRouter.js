@@ -4,6 +4,7 @@ import Feed from './Routes/Feed'
 import Compose from './Routes/Compose'
 import Settings from './Routes/Settings'
 import Icon from "./Common/Icon";
+import ComposeRouter from './ComposeRouter';
 
 export default class MainRouter extends Component {
     constructor(props){
@@ -16,7 +17,6 @@ export default class MainRouter extends Component {
     }
     navigate(location){
         this.setState({view:location})
-
     }
     renderView(){
         console.log("main rendering for",this.state.view);
@@ -29,10 +29,10 @@ export default class MainRouter extends Component {
         }
         else if(this.state.view === "compose"){
             return(
-                <Compose
-                    navigate={this.navigate}
-
-                />
+                // <Compose
+                //     navigate={this.navigate}
+                // />
+                <ComposeRouter/>
             )
 
         }

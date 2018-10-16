@@ -61,6 +61,7 @@ export default class Login extends React.Component {
         const { navigate } = this.props.navigate;
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
+            <Text style={{ fontWeight: 'bold', color: '#9d2235', fontSize: 36}}>SCU Leftovers</Text>
             <Text>SCU Email</Text>
             <TextInput
                 style={{height: 40, borderColor: 'gray', borderWidth: 1,padding:10,width:"80%"}}
