@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     picButton: {
-      backgroundColor: 'darkseagreen',
+      backgroundColor: '#9d2235',
     },
     galleryButton: {
       backgroundColor: 'indianred',
