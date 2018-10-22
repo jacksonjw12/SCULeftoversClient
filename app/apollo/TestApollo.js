@@ -18,6 +18,7 @@ class TestApolloComponent extends React.Component {
         console.log("in test apollo")
     }
     render() {
+        const time = new Date().toTimeString()
         if(this.props.getUserInfo.loading){
             return(
                 <Text>Loading User Info</Text>
@@ -28,6 +29,7 @@ class TestApolloComponent extends React.Component {
                 <View style={{ flex: 1,height:50, justifyContent: 'center', alignItems: 'center' }}>
                     <Text>Welcome User: {this.props.getUserInfo.User.email}!</Text>
                     <Text>Your User ID is:</Text>
+                    <Text> Loaded at {time}</Text>
                     <Text>{this.props.getUserInfo.User.id}</Text>
                 </View>
               );

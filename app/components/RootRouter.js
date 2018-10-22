@@ -76,14 +76,23 @@ export default class RootRouter extends Component {
 
     }
     async handleLogout(logout){
-        this.user = {}
-        await AsyncStorage.removeItem('email')
-        await AsyncStorage.removeItem('password')
-        await AsyncStorage.removeItem('id')
+        let client = this.props.client
+        fetch(`http://localhost:8000/logout`, {
+          credentials: 'same-origin',
+        }).then((response) => {
+            console.log(response)
 
-        this.setState({loggedIn:false,view:"unAuthorizedRouter"})
 
+            if (response) {
+                client.cache.reset()
+                this.user = {}
+                AsyncStorage.removeItem('email')
+                AsyncStorage.removeItem('password')
+                AsyncStorage.removeItem('id')
 
+                this.setState({loggedIn:false,view:"unAuthorizedRouter",user:{}})
+            }
+        })
 
     }
     handleSignUp(signUp){
