@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Button, ImageBackground,ScrollView,StyleSheet,Text,TouchableOpacity, TextInput, View} from 'react-native';
 import Icon from "../Common/Icon";
-import { RNS3 } from 'react-native-aws3';
+import SubmitPost from '../../apollo/submitPost';
+
 export default class Compose extends React.Component {
   constructor(props){
     super(props)
@@ -25,47 +26,15 @@ export default class Compose extends React.Component {
     console.log(this.state.tags);
   }
 
-  submitPost(pictureURI) {
-    console.log(pictureURI)
-    if (pictureURI == ''){
-      console.log('picture required');
-      return;
-    }
-    const file = {
-      uri: pictureURI,
-      name: 'photo.jpg',
-      type: 'image/jpeg'
-    };
-
-    const options = {
-      keyPrefix: 'photos/',
-      bucket: '<bucket_name>',
-      region: 'us-east-1',
-      accessKey: '<your_access_key>',
-      secretKey: '<your_secret_key>',
-      successActionStatus: 201
-      };
-    
-    RNS3.put(file, options)
-      .then(response => {
-          if (response.status !== 201) {
-            throw new Error('Failed to upload image to S3', response);
-          }
-          console.log('*** BODY ***', response.body);
-        })
-      .catch(err => console.error(err));
-  };
-
   deleteTag(index) {
     var array = [...this.state.tags]; // make a separate copy of the array
     array.splice(index, 1);
     this.setState({tags: array});
   }
 
-
-
   render() {
     let picture;
+    // console.log('pictureURI1: ', this.props.pictureURI);
     if (this.props.pictureURI === ''){
       picture = 
                 <TouchableOpacity 
@@ -151,11 +120,9 @@ export default class Compose extends React.Component {
           {tags}
         </View>
         <View style={{marginTop:50,padding: 5, height: 50, justifyContent:'center'}}>
-          <TouchableOpacity 
-            style={styles.submitButton}
-            onPress={()=> this.submitPost(this.props.pictureURI)}>
-            <Text style={styles.buttonText}>Submit</Text>
-          </TouchableOpacity>
+          <SubmitPost
+            pictureURI = {this.props.pictureURI}
+          />
         </View>
       </View>
     );

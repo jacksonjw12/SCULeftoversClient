@@ -16,6 +16,7 @@ export default class ComposeRouter extends Component {
             pictureURI: ''
         }
         this._handlePictureTaken = this._handlePictureTaken.bind(this)
+        this._handlePictureSubmission = this._handlePictureSubmission.bind(this)
         this.navigate = this.navigate.bind(this)
     }
 
@@ -28,6 +29,10 @@ export default class ComposeRouter extends Component {
         this.setState({pictureURI: pictureLocation});
       }
 
+    _handlePictureSubmission = () => {
+        this.setState({pictureURI: ''})
+    }
+
     render(){
         // let picture;
         if (this.state.view === 'Compose') {
@@ -37,6 +42,8 @@ export default class ComposeRouter extends Component {
                         navigate={this.navigate}
                         pictureURI={this.state.pictureURI}
                         _handlePictureTaken={this._handlePictureTaken}
+                        _handlePictureSubmission={this._handlePictureSubmission}
+                        client={this.props.client}
                     />
                 </View>
             )
