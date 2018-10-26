@@ -1,17 +1,27 @@
 import React, {Component} from 'react';
 import {Button, Text, View, TouchableOpacity, StyleSheet} from 'react-native';
+import TestApollo from '../../apollo/TestApollo'
 
 export default class Settings extends React.Component {
     render() {
+        if(!this.props.show){
+            return null
+        }
       return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text>Settings!!</Text>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',width:"100%" }}>
+
+            <View style={{flex:1,marginTop:"30%"}}>
+                <Text>Settings!!</Text>
+            </View>
+            <TestApollo />
+             <View style={{flex:1, width:"100%",alignItems:'center'}}>
             <TouchableOpacity
                 onPress={this.props.onLogout}
                 style={[styles.button,styles.largeButton,{backgroundColor:"#fc3444"}]}
             >
                 <Text style={styles.innerButton}>Log Out</Text>
             </TouchableOpacity>
+             </View>
         </View>
       );
     }

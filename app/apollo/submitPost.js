@@ -13,13 +13,18 @@ import gql from 'graphql-tag'
 //   }
 // `;
 
+
 const UPLOAD_POST = gql`
-{
-  query getsigned{
-    signed_url
+mutation createPost($title: String, $pictureURL:String!) {
+  createPost(
+    title: $title,
+    pictureURL: $pictureURL
+   
+  ) {
+    id
+   
   }
-}
-`;
+}`
 
 class SubmitPostComponent extends React.Component {
     constructor(props) {
@@ -41,7 +46,7 @@ class SubmitPostComponent extends React.Component {
                         if (xhr.readyState === 4) {
                             if (xhr.status === 200) {
                                 console.log('image uploaded successfully')
-                                resolve(response)
+                                resolve(xhr._url.split("?")[0])
                             } else {
                                 console.log(xhr)
                                 console.log('image failed to upload')
@@ -63,7 +68,16 @@ class SubmitPostComponent extends React.Component {
 
     submitPost() {
         this.uploadImage().then((response) => {
+            console.log(response)
             console.log("continue post upload")
+            this.props.uploadPost({
+              variables: { title: "Test Title", pictureURL: response },
+            })
+              .then((response) => {
+                  console.log(response)
+                  this.props.navigate("feed")
+
+              })
         })
     }
 

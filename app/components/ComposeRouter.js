@@ -4,7 +4,7 @@ import RNCameraScreen from './Routes/Camera';
 import Compose from './Routes/Compose';
 import Icon from "./Common/Icon";
 
-  
+
 //#9d2235
 
 export default class ComposeRouter extends Component {
@@ -12,15 +12,15 @@ export default class ComposeRouter extends Component {
         super(props)
         this.state = {
             ...this.state,
-            view:"Compose",
+            view:"Camera",
             pictureURI: ''
         }
         this._handlePictureTaken = this._handlePictureTaken.bind(this)
         this._handlePictureSubmission = this._handlePictureSubmission.bind(this)
-        this.navigate = this.navigate.bind(this)
+        this.navigateCompose = this.navigateCompose.bind(this)
     }
 
-    navigate(location){
+    navigateCompose(location){
         this.setState({view:location})
     }
 
@@ -37,27 +37,38 @@ export default class ComposeRouter extends Component {
         // let picture;
         if (this.state.view === 'Compose') {
             return(
-                <View style={{flex:1,alignItems:'center'}}>
-                    <Compose
-                        navigate={this.navigate}
-                        pictureURI={this.state.pictureURI}
-                        _handlePictureTaken={this._handlePictureTaken}
-                        _handlePictureSubmission={this._handlePictureSubmission}
-                        client={this.props.client}
-                    />
-                </View>
-            )
-        } else if (this.state.view === 'Camera') {
-            return (
-                <View style = {{flex:1}}>
-                    <RNCameraScreen
-                        navigate={this.navigate}
-                        _handlePictureTaken={this._handlePictureTaken}
-                    />
-                </View>
+
+                <Compose
+                    show={this.props.show}
+                    navigateCompose={this.navigateCompose}
+                    navigate={this.props.navigate}
+                    pictureURI={this.state.pictureURI}
+                    _handlePictureTaken={this._handlePictureTaken}
+                    _handlePictureSubmission={this._handlePictureSubmission}
+                    client={this.props.client}
+                />
 
             )
+        } else if (this.state.view === 'Camera') {
+            if(!this.props.show){
+                return null
+            }
+            else{
+                return (
+                    <View style = {{flex:1}}>
+                        <RNCameraScreen
+                            navigate={this.navigateCompose}
+                            _handlePictureTaken={this._handlePictureTaken}
+                        />
+                    </View>
+
+                )
+            }
+
         } else if (this.state.view === 'Picture') {
+            if(!this.props.show){
+                return null
+            }
             return (
                 <View style={{flex:1}}>
                     <ImageBackground
@@ -68,7 +79,7 @@ export default class ComposeRouter extends Component {
                         <Button
                             title="X"
                             onPress={()=> {
-                                this.navigate('Camera')
+                                this.navigateCompose('Camera')
                                 this._handlePictureTaken('')
                             }}
                             color="#9d2235"
@@ -87,7 +98,7 @@ export default class ComposeRouter extends Component {
                                 borderColor: 'gray',
                                 width: 100}}
                             onPress={() =>
-                                this.navigate('Compose')
+                                this.navigateCompose('Compose')
                             }>
                             <Text style={{color:'#fff',textAlign:'center',paddingLeft : 10,paddingRight : 10}}>Add Photo</Text>
                         </TouchableOpacity>

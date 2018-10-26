@@ -40,7 +40,7 @@ export default class Compose extends React.Component {
     if (this.props.pictureURI === ''){
       picture =
                 <TouchableOpacity
-                  onPress={()=>this.props.navigate("Camera")}
+                  onPress={()=>this.props.navigateCompose("Camera")}
                   style={{backgroundColor:"white",flex:1}}>
                     <Text style={{top:50, textAlign: 'center', color:'#9d2235'}}>Add a picture</Text>
                     <Icon icon={"compose"} />
@@ -55,7 +55,7 @@ export default class Compose extends React.Component {
                         <Button
                             title="x"
                             onPress={() => {
-                                this.props.navigate('Compose');
+                                this.props.navigateCompose('Compose');
                                 this.props._handlePictureTaken('');
                             }}
                             color="#9d2235"
@@ -82,8 +82,12 @@ export default class Compose extends React.Component {
           </TouchableOpacity>);
       }
     }
-
+    if(!this.props.show){
+        return null
+    }
     return (
+        <View style={{flex:1,alignItems:'center'}}>
+
       <View style={{alignItems:'center',position: 'absolute'}}>
         <View style={{height:"40%",backgroundColor:"white", justifyContent: 'center'}}>
           {picture}
@@ -124,10 +128,12 @@ export default class Compose extends React.Component {
         <View style={{marginTop:50,padding: 5, height: 50, justifyContent:'center'}}>
           <SubmitPost
             pictureURI = {this.props.pictureURI}
+            navigate={this.props.navigate}
           />
 
         </View>
       </View>
+        </View>
     );
   }};
 

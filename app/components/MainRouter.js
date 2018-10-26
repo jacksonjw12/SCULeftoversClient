@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Text,View,TouchableOpacity,Image, StyleSheet } from 'react-native';
-import Feed from './Routes/Feed'
+import FeedRouter from './FeedRouter'
 import Compose from './Routes/Compose'
 import Settings from './Routes/Settings'
 import Icon from "./Common/Icon";
@@ -20,35 +20,28 @@ export default class MainRouter extends Component {
     }
     renderView(){
         console.log("main rendering for",this.state.view);
-        if(this.state.view === "feed"){
+
             return(
-                <Feed
+                <View style={{flex:1}}>
+                <FeedRouter
+                    show={this.state.view === 'feed'}
                     navigate={this.navigate}
                 />
-            )
-        }
-        else if(this.state.view === "compose"){
-            return(
-                // <Compose
-                //     navigate={this.navigate}
-                // />
-                <ComposeRouter/>
-            )
-
-        }
-        else if(this.state.view === "settings"){
-            return(
+                <ComposeRouter
+                    show={this.state.view === "compose"}
+                    navigate={this.navigate}
+                />
                 <Settings
+                    show={this.state.view === "settings"}
                     navigate={this.navigate}
                     onLogout={this.props.handleLogout}
                 />
+                </View>
             )
-        }
-        else{
-            return(
-                <Text>Invalid MainRouter View</Text>
-            )
-        }
+
+
+
+
     }
     render(){
         return (
