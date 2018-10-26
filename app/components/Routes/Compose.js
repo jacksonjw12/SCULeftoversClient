@@ -32,19 +32,21 @@ export default class Compose extends React.Component {
     this.setState({tags: array});
   }
 
+
+
   render() {
     let picture;
     // console.log('pictureURI1: ', this.props.pictureURI);
     if (this.props.pictureURI === ''){
-      picture = 
-                <TouchableOpacity 
-                  onPress={()=>this.props.navigate("Camera")} 
-                  style={{backgroundColor:"white",flex:1}}>  
+      picture =
+                <TouchableOpacity
+                  onPress={()=>this.props.navigate("Camera")}
+                  style={{backgroundColor:"white",flex:1}}>
                     <Text style={{top:50, textAlign: 'center', color:'#9d2235'}}>Add a picture</Text>
                     <Icon icon={"compose"} />
                 </TouchableOpacity>;
     } else {
-      picture = 
+      picture =
                 <ImageBackground
                     style={{width: 150, height: 150}}
                     source={{uri: this.props.pictureURI}}
@@ -57,7 +59,7 @@ export default class Compose extends React.Component {
                                 this.props._handlePictureTaken('');
                             }}
                             color="#9d2235"
-                        />  
+                        />
                     </View>
                 </ImageBackground>;
     }
@@ -65,7 +67,7 @@ export default class Compose extends React.Component {
     var tags = [];
     if (this.state.tags && this.state.tags.length > 0){
       for(let i = 0; i < this.state.tags.length; i++){
-        tags.push( 
+        tags.push(
           <TouchableOpacity style={styles.tagItem}>
           <View style={{position: 'absolute', right: 0, top: 1}}>
                         <Button
@@ -87,14 +89,14 @@ export default class Compose extends React.Component {
           {picture}
         </View>
         <View style={{padding: 5, top:5,width:100, height: 75, justifyContent:'center'}}>
-          <TextInput 
+          <TextInput
             style={{top:5,height: 30, borderColor: 'gray', borderWidth: 1, textAlign: 'center'}}
             value={this.state.text}
-            onChangeText={(title) => this.setState({title})} 
+            onChangeText={(title) => this.setState({title})}
             placeholder="Title"/>
         </View>
         <View style={{padding: 5, width:200, height: 100, justifyContent:'center'}}>
-          <TextInput 
+          <TextInput
             style={{height: 100, width: 200, top:5, borderColor: 'gray', borderWidth:1,textAlign: 'center'}}
             maxLength = {150}
             multiline = {true}
@@ -103,13 +105,13 @@ export default class Compose extends React.Component {
             placeholder="Description!"/>
         </View>
         <View style={{padding: 5, width:300, height: 75, justifyContent:'center', flexDirection:'row'}}>
-          <TextInput 
+          <TextInput
             style={{height: 30, width:300, borderColor: 'gray', borderWidth: 1, alignSelf: 'center',textAlign: 'center'}}
             value={this.state.text}
-            onChangeText={(tagText) => this.setState({tagText})} 
+            onChangeText={(tagText) => this.setState({tagText})}
             placeholder="Tag item here! e.g. allergens, exp date, etc."
             ref={input => { this.tagInput = input }}/>
-          <TouchableOpacity 
+          <TouchableOpacity
             style = {styles.plusButton}
             onPress={this.addTag.bind(this)}>
             <Text style={styles.buttonText}>+</Text>
@@ -123,6 +125,7 @@ export default class Compose extends React.Component {
           <SubmitPost
             pictureURI = {this.props.pictureURI}
           />
+
         </View>
       </View>
     );
