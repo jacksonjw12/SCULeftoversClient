@@ -60,36 +60,40 @@ export default class Login extends React.Component {
     render() {
         const { navigate } = this.props.navigate;
         return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', }}>
-            <Text style={{ fontWeight: 'bold', color: '#9d2235', fontSize: 36}}>SCU Leftovers</Text>
-            <Text>SCU Email</Text>
-            <TextInput
-                style={{height: 40, borderColor: 'gray', borderWidth: 1,padding:10,width:"80%"}}
-                onChangeText={(text) => this.setState({emailText:text.toLowerCase()})}
-                value={this.state.emailText}
-            />
-            <Text>Password</Text>
-            <TextInput
-                style={{height: 40, borderColor: 'gray', borderWidth: 1,padding:10,width:"80%"}}
-                onChangeText={(text) => this.setState({passwordText:text})}
-                value={this.state.passwordText}
-                secureTextEntry={true}
-            />
+            <View style={{flex:1}}>
+                <View style={{justifyContent: 'center', alignItems: 'center',height:"30%", marginBottom:20, marginTop:20}}>
+                    <Text style={{ fontWeight: 'bold', color: '#9d2235', fontSize: 36}}>SCU Leftovers</Text>
+                </View>
+                <View style = {{height:"50%",justifyContent: 'center', alignItems: 'center',}}>
+                    <TextInput
+                        style={{height: 40, borderColor: 'gray', borderWidth: 1,padding:10,width:"80%"}}
+                        onChangeText={(text) => this.setState({emailText:text.toLowerCase()})}
+                        value={this.state.emailText}
+                        placeholder="SCU Email Address"
+                    />
+                    <TextInput
+                        style={{height: 40, borderColor: 'gray', borderWidth: 1,padding:10,width:"80%"}}
+                        onChangeText={(text) => this.setState({passwordText:text})}
+                        value={this.state.passwordText}
+                        secureTextEntry={true}
+                        placeholder="Password"
+                    />
 
-            <TouchableOpacity
-                onPress={this.login}
-                underlayColor='#fff'
-                style={[styles.button,styles.largeButton,{backgroundColor:"teal"}]}
-            >
-                <Text style={styles.innerButton}>Log In</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                onPress={()=>this.props.navigate("main")}
-                underlayColor='#fff'
-                style={[styles.button,styles.largeButton,{backgroundColor:"#fcc000"}]}
-            >
-                <Text style={styles.innerButton}>Back</Text>
-            </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={this.login}
+                        underlayColor='#fff'
+                        style={[styles.button,styles.largeButton,{backgroundColor:"teal"}]}
+                    >
+                        <Text style={styles.innerButton}>Log In</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={()=>this.props.navigate("main")}
+                        underlayColor='#fff'
+                        style={[styles.button,styles.largeButton,{backgroundColor:"#fcc000"}]}
+                    >
+                        <Text style={styles.innerButton}>Back</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         )
     }
