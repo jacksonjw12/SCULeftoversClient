@@ -3,6 +3,7 @@ import {Text, View,ScrollView, Image} from 'react-native';
 import gql from "graphql-tag";
 import {compose, graphql} from "react-apollo";
 import FeedItem from '../Common/FeedItem'
+import NavBar from "../Common/NavBar";
 const GET_FEED = gql`
 query getFeed{
   getFeed{
@@ -27,7 +28,19 @@ class FeedComponent extends Component {
         let {width, height} = event.nativeEvent.layout
         this.setState({dimensions: {width, height}})
     }
-
+    handleScroll = (event) => {
+        this.scroll = event.nativeEvent.contentOffset.y
+        if (this.ready && this.scroll < SCROLL_TRIGGER) {
+        // load more stuff here
+        }
+    }
+    handleSize = (width, height) => {
+        if (this.scroll) {
+            const position = this.scroll + height - this.height
+            this.refs.sv.scrollTo({x: 0, y: position, animated: false})
+        }
+        this.height = height
+    }
     render() {
         if(!this.props.show){
             return null
@@ -48,8 +61,14 @@ class FeedComponent extends Component {
             ))
         })
         return (
-            <View style={{flex:1,paddingBottom:0,marginBottom:0,backgroundColor:"red"}}>
-                <ScrollView style={{backgroundColor:"#ededed"}}>
+            <View style={{flex:1,paddingBottom:0,marginBottom:0,backgroundColor:"transparent"}}>
+                <ScrollView
+                    ref="sv"
+                    onScroll={this.handleScroll}
+                    onContentSizeChange={this.handleSize}
+                    scrollEventThrottle={16}
+                    style={{backgroundColor:"#ededed"}}
+                >
                     {/*<View style={{flex:1,justifyContent:'center'}}><Text>Feed!</Text></View>*/}
                     {/*<View key={0}>*/}
                         {/*<Text>{this.props.getFeed.getFeed[0].title}</Text>*/}
@@ -58,6 +77,8 @@ class FeedComponent extends Component {
                     {feedItems}
                     <View style={{height:40}}/>
                 </ScrollView>
+                <NavBar view={'feed'} navigate={this.props.navigate} />
+
             </View>
         );
 

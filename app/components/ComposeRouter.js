@@ -3,6 +3,7 @@ import { Button,View,Image,ImageBackground,TouchableOpacity,Text } from 'react-n
 import RNCameraScreen from './Routes/Camera';
 import Compose from './Routes/Compose';
 import Icon from "./Common/Icon";
+import NavBar from "./Common/NavBar";
 
 
 //#9d2235
@@ -60,6 +61,8 @@ export default class ComposeRouter extends Component {
                             navigate={this.navigateCompose}
                             _handlePictureTaken={this._handlePictureTaken}
                         />
+                        <NavBar view={'compose'} navigate={this.props.navigate} />
+
                     </View>
 
                 )
@@ -75,32 +78,48 @@ export default class ComposeRouter extends Component {
                         style={{width:'100%',height:'100%', resizeMode: 'cover'}}
                         source={{uri: this.state.pictureURI}}
                     >
-                    <View style={{position: 'absolute'}}>
-                        <Button
-                            title="X"
+                    <View style={{position: 'absolute',left:20,top:20}}>
+                        {/*<Button*/}
+                            {/*title="X"*/}
+                            {/*onPress={()=> {*/}
+                                {/*this.navigateCompose('Camera')*/}
+                                {/*this._handlePictureTaken('')*/}
+                            {/*}}*/}
+                            {/*color="#9d2235"*/}
+                        {/*/>*/}
+                        <TouchableOpacity
+                            style={{
+                                // paddingTop:10,
+                                // paddingBottom:10,
+                                backgroundColor: 'transparent',
+                                borderRadius:25,
+                                borderWidth: 1,
+                                borderColor: 'transparent',
+                                width:50,
+                                height:50
+                            }}
                             onPress={()=> {
                                 this.navigateCompose('Camera')
                                 this._handlePictureTaken('')
-                            }}
-                            color="#9d2235"
-                        />
+                            }}>
+                            <Text style={{color:'#fff',fontSize:30,textAlign:'center',paddingLeft : 10,paddingRight : 10}}>X</Text>
+                        </TouchableOpacity>
                     </View>
-                    <View style={{position: 'absolute',right: 5,top: 20}}>
+                    <View style={{position: 'absolute',right: 20,bottom: 20}}>
                         <TouchableOpacity
-                            style={{marginRight:10,
-                                marginLeft:40,
-                                marginTop:10,
-                                paddingTop:10,
-                                paddingBottom:10,
-                                backgroundColor: '#9d2235',
+                            style={{
+
+
+
+                                backgroundColor: '#fff',
                                 borderRadius:10,
                                 borderWidth: 1,
                                 borderColor: 'gray',
-                                width: 100}}
+                                width: 75}}
                             onPress={() =>
                                 this.navigateCompose('Compose')
                             }>
-                            <Text style={{color:'#fff',textAlign:'center',paddingLeft : 10,paddingRight : 10}}>Add Photo</Text>
+                            <Text style={{color:'#9d2235',fontSize:35,textAlign:'center',paddingLeft : 10,paddingRight : 10}}>&rarr;</Text>
                         </TouchableOpacity>
                     </View>
                     </ImageBackground>

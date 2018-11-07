@@ -71,7 +71,7 @@ class SubmitPostComponent extends React.Component {
             console.log(response)
             console.log("continue post upload")
             this.props.uploadPost({
-              variables: { title: "Test Title", pictureURL: response },
+              variables: { title: "Demo Post!", pictureURL: response },
             })
               .then((response) => {
                   console.log(response)

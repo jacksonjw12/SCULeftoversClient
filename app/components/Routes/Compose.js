@@ -36,7 +36,7 @@ export default class Compose extends React.Component {
 
   render() {
     let picture;
-    // console.log('pictureURI1: ', this.props.pictureURI);
+    console.log('pictureURI1: ', this.props.pictureURI);
     if (this.props.pictureURI === ''){
       picture =
                 <TouchableOpacity
@@ -48,7 +48,7 @@ export default class Compose extends React.Component {
     } else {
       picture =
                 <ImageBackground
-                    style={{width: 150, height: 150}}
+                    style={{width: 90, height: 160}}
                     source={{uri: this.props.pictureURI}}
                     >
                     <View style={{position: 'absolute',right: 5,top: 5}}>

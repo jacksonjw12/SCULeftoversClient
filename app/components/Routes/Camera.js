@@ -6,7 +6,7 @@ import {
     View
   } from 'react-native';
 import {RNCamera} from 'react-native-camera';
-  
+
 const landmarkSize = 2;
 
 const flashModeOrder = {
@@ -26,24 +26,28 @@ const wbOrder = {
 };
 
 export default class RNCameraScreen extends React.Component {
-  state = {
-    flash: 'off',
-    zoom: 0,
-    autoFocus: 'on',
-    depth: 0,
-    type: 'back',
-    whiteBalance: 'auto',
-    ratio: '16:9',
-    ratios: [],
-    photoId: 1,
-    showGallery: false,
-    photos: [],
-    isRecording: false,
-    photoURI: ''
-  };
+    constructor(props){
+        super(props)
+        this.state = {
+            ...this.state,
+            flash: 'off',
+            zoom: 0,
+            autoFocus: 'on',
+            depth: 0,
+            type: 'back',
+            whiteBalance: 'auto',
+            ratio: '16:9',
+            ratios: [],
+            photoId: 1,
+            showGallery: false,
+            photos: [],
+            isRecording: false,
+            photoURI: ''
+        }
+    }
 
   getRatios = async function() {
-    const ratios = await this.camera.getSupportedRatios();
+    const ratios = await this.refs.camera.getSupportedRatios();
     return ratios;
   };
 
@@ -106,7 +110,10 @@ export default class RNCameraScreen extends React.Component {
   }
 
   takePicture = async function() {
+      console.log(this.camera)
     if (this.camera) {
+        console.log("picture sizes",this.camera.getAvailablePictureSizes())
+
       this.camera.takePictureAsync().then(data => {
         console.log('data: ', data);
         this.state.photoURI = data.uri;
@@ -123,6 +130,7 @@ export default class RNCameraScreen extends React.Component {
       <RNCamera
         ref={ref => {
           this.camera = ref;
+          this.camera.getAvailablePictureSizes().then(({r})=>{console.log(r)})
         }}
         style={{
           flex: 1,
@@ -142,15 +150,18 @@ export default class RNCameraScreen extends React.Component {
             flex: 0.5,
             backgroundColor: 'transparent',
             flexDirection: 'row',
-            justifyContent: 'space-around',
+            margin:20,
+            // justifyContent: 'space-around',
           }}
         >
           {/* <TouchableOpacity style={styles.flipButton} onPress={this.toggleFacing.bind(this)}>
             <Text style={styles.flipText}> FLIP </Text>
           </TouchableOpacity> */}
-          <TouchableOpacity style={styles.flipButton} onPress={this.goBack.bind(this)}>
-            <Text style={{color:'white', fontSize:30}}>  &#8629; </Text>
-          </TouchableOpacity>
+
+          {/*<TouchableOpacity style={styles.flipButton} onPress={this.goBack.bind(this)}>*/}
+            {/*<Text style={{color:'white', fontSize:30}}>  &#8629; </Text>*/}
+          {/*</TouchableOpacity>*/}
+
           <TouchableOpacity style={styles.flipButton} onPress={this.toggleFlash.bind(this)}>
             <Text style={styles.flipText}> FLASH: {this.state.flash} </Text>
           </TouchableOpacity>
@@ -188,6 +199,7 @@ export default class RNCameraScreen extends React.Component {
             backgroundColor: 'transparent',
             flexDirection: 'row',
             alignSelf: 'center',
+              marginBottom:'10%'
           }}
         >
           {/* <TouchableOpacity
@@ -226,6 +238,8 @@ export default class RNCameraScreen extends React.Component {
   }
 
   render() {
+
+
     // const { onUserInputChange } = this.props;
     return <View style={styles.container}>{this.renderCamera()}</View>;
   }
@@ -261,19 +275,21 @@ const styles = StyleSheet.create({
     },
     flipButton: {
       flex: 0.3,
-      height: 40,
+      height: 50,
+        width:50,
       marginHorizontal: 2,
-      marginBottom: 10,
+      marginBottom: 25,
       marginTop: 20,
-      borderRadius: 8,
+      borderRadius: 25,
       borderColor: 'white',
       borderWidth: 1,
       padding: 5,
       alignItems: 'center',
       justifyContent: 'center',
+        backgroundColor:'white',
     },
     flipText: {
-      color: 'white',
+      color: '#9d2235',
       fontSize: 15,
     },
     item: {
@@ -286,7 +302,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     picButton: {
-      backgroundColor: '#9d2235',
+      backgroundColor: '#fff',
     },
     galleryButton: {
       backgroundColor: 'indianred',

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import TestApollo from '../../apollo/TestApollo'
+import NavBar from "../Common/NavBar";
 
 export default class Settings extends React.Component {
     render() {
@@ -22,6 +23,8 @@ export default class Settings extends React.Component {
                 <Text style={styles.innerButton}>Log Out</Text>
             </TouchableOpacity>
              </View>
+            <NavBar view={'settings'} navigate={this.props.navigate} />
+
         </View>
       );
     }

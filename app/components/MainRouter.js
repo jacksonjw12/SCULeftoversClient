@@ -5,6 +5,7 @@ import Compose from './Routes/Compose'
 import Settings from './Routes/Settings'
 import Icon from "./Common/Icon";
 import ComposeRouter from './ComposeRouter';
+import NavBar from './Common/NavBar'
 
 export default class MainRouter extends Component {
     constructor(props){
@@ -46,21 +47,8 @@ export default class MainRouter extends Component {
     render(){
         return (
             <View style={{flex:1}}>
-                <View style={{height:"92%",backgroundColor:"white"}}>{this.renderView()}</View>
-                <View style={{height:"8%",flexDirection:"row", borderTopColor:"black",borderTopWidth:1}}>
-                    <TouchableOpacity onPress={()=>this.navigate("compose")} style={{backgroundColor:"white",flex:1}}>
-                        <Icon icon={"compose"} color={this.state.view === "compose" ? "#9d2235":undefined} size={60}/>
-                        {/*<Image style={styles.bottomIcon} source={require('../images/compose.png')} />*/}
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.navigate("feed")} style={{backgroundColor:"white",flex:1}} >
-                        <Icon icon={"feed"} color={this.state.view === "feed" ? "#9d2235":undefined} size={50}/>
-                        {/*<Image style={styles.bottomIcon} source={require('../images/home.png')} />*/}
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={()=>this.navigate("settings")} style={{backgroundColor:"white",flex:1}} >
-                        <Icon icon={"settings"} color={this.state.view === "settings" ? "#9d2235":undefined} size={50}/>
-                        {/*<Image style={styles.bottomIcon} source={require('../images/settings.png')} />*/}
-                    </TouchableOpacity>
-                </View>
+                <View style={{height:"100%",backgroundColor:"white"}}>{this.renderView()}</View>
+
             </View>
         )
     }
