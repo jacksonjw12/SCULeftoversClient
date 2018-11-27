@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import {Text, View, Image, StyleSheet, ScrollView,TouchableOpacity} from 'react-native';
+import {Text, View, Image, StyleSheet, Modal,TouchableOpacity,TouchableHighlight} from 'react-native';
 import gql from "graphql-tag";
 import {compose, graphql} from "react-apollo";
+
+import ItemDetailComponent from './ItemDetail';
 //not used, will be used to do mutations on the post
 const GET_POST = gql`
 query getPost{
@@ -11,6 +13,7 @@ query getPost{
     pictureURL
   }
 }`
+
 class FeedItemComponent extends Component {
     constructor(props){
         super(props)
@@ -18,13 +21,15 @@ class FeedItemComponent extends Component {
             loaded:false,
             expanded:false
         }
+        this.expand = this.expand.bind(this);
     }
 
-    expand() {
-        console.log("would have expanded")
+    expand(expanded) {
+        console.log('hi')
+        this.setState({expanded: expanded});
     }
     render() {
-        const postHeight = .75 * this.props.dimensions.height;
+        const postHeight = .5 * this.props.dimensions.height;
         if(!this.props.show){
             return null
         }
@@ -37,13 +42,30 @@ class FeedItemComponent extends Component {
                      {/*<View style={{ flex: 1, justifyContent: 'space-around', alignItems: 'center' }}>*/}
                     {/*<View style={{flex:1,justifyContent:'center'}}><Text>Loading...</Text></View>*/}
                 {/*</View>*/}
-
+                    <Modal
+                        animationType="fade"
+                        transparent={false}
+                        visible={this.state.expanded}
+                        onRequestClose={() => {
+                            Alert.alert('Modal has been closed.');
+                        }}>
+                        <ItemDetailComponent item={this.props.item} expand={this.expand}/>
+                        
+                    </Modal>
+                                
                     <View style={styles.innerContainer}>
-
-
-                        <Image style={styles.postImage} source={{uri: this.props.item.pictureURL,width:32,height:32}}  />
-                        <View style={styles.postTitleBar}><Text style={styles.postTitle}>{this.props.item.title}</Text></View>
-                         <TouchableOpacity onPress={()=>this.expand()} style={styles.postTouch} />
+                        <TouchableOpacity 
+                            onPress={()=>{this.expand(!this.state.expanded)}} 
+                            style={styles.postTouch}>
+                            {/* <View> */}
+                                <Image style={styles.postImage} source={{uri: this.props.item.pictureURL,width:32,height:32}}  />
+                            {/* </View> */}
+                            <View style={{...styles.postTitleBar,shadowOffset:{  width: 0,  height: 2,  },
+                                shadowColor: 'black',
+                                shadowOpacity: 0.5,}}>
+                                <Text style={styles.postTitle}>{this.props.item.title}</Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
 
                 </View>
@@ -89,17 +111,12 @@ const styles = StyleSheet.create({
     },
     innerContainer:{
         position:'relative',
-        marginLeft:"6%",
-        marginRight:"6%",
+        marginLeft:"10%",
+        marginRight:"10%",
         marginTop:"10%",
         // height:"60%",
         flex: 1,
         borderRadius:20,
-        // borderColor:"black",
-        // borderWidth:1,
-        shadowOffset:{  width: 0,  height: 2,  },
-        shadowColor: 'black',
-        shadowOpacity: 0.5,
         justifyContent: 'space-around',
         alignItems: 'center',
         backgroundColor:"black",
@@ -107,25 +124,29 @@ const styles = StyleSheet.create({
     },
     postImage: {
         width:"100%",
-        height:"100%",
+        height:"90%",
         marginTop:0,
         zIndex:1,
+        resizeMode: 'contain',
         borderRadius:20,
         overflow:'hidden'
     },
     postTitleBar: {
         position:'absolute',
-        bottom:0,
+        bottom:-15,
         left:0,
         backgroundColor:'white',
         width:"100%",
-        height:"20%",
+        height:"15%",
         borderBottomLeftRadius:20,
         borderBottomRightRadius:20,
         zIndex:10,
-        opacity:.9,
+        // opacity:.9,
         flex:1,
-        alignItems:'center'
+        alignItems:'center',
+        // shadowOffset:{  width: 0,  height: 2,  },
+        // shadowColor: 'black',
+        // shadowOpacity: 0.5,
     },
     postTitle: {
         paddingTop:10,
