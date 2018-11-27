@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View,ScrollView, Image} from 'react-native';
+import {Text, View,ScrollView, RefreshControl, Image} from 'react-native';
 import gql from "graphql-tag";
 import {compose, graphql} from "react-apollo";
 import FeedItem from '../Common/FeedItem'
@@ -19,9 +19,26 @@ class FeedComponent extends Component {
         super(props)
         this.state = {...this.state,
             loading:[],
-            dimensions:undefined
+            dimensions:undefined,
+            refreshing:false,
 
         }
+    }
+
+    componentWillReceiveProps(props){
+        console.log(props)
+    }
+
+    _onRefresh(){
+        console.log("refresh")
+        console.log(this.props.getFeed)
+        this.props.getFeed.refetch().then(r=>{
+            console.log(r.data)
+            console.log(this.props.getFeed)
+            //this.refs.sv.scrollTo({x: 0, y: 0, animated: true})
+
+        })
+
     }
     onLayout = event => {
         if (this.state.dimensions) return
@@ -45,6 +62,13 @@ class FeedComponent extends Component {
         if(!this.props.show){
             return null
         }
+        let reloaded = false
+        if(this.props.shouldFeedReload()){
+            this._onRefresh()
+            reloaded = true
+            this.scroll = 0
+
+        }
         if(this.props.getFeed.loading || this.state.dimensions === undefined){
             return(
                 <View style={{flex: 1, alignSelf: 'stretch'}} onLayout={this.onLayout}>
@@ -54,12 +78,21 @@ class FeedComponent extends Component {
         }
         let feedItems = []
         console.log(this.state.dimensions)
-        this.props.getFeed.getFeed.forEach((f,i)=>{
-            console.log(f)
-            feedItems.push((
-                <FeedItem key={i} show={this.props.show} dimensions={this.state.dimensions} item={f} />
-            ))
-        })
+        if(this.props.getFeed.getFeed !== undefined){
+            this.props.getFeed.getFeed.forEach((f,i)=>{
+                feedItems.push((
+                    <FeedItem key={i} show={this.props.show} dimensions={this.state.dimensions} item={f} />
+                ))
+            })
+        }
+        if(reloaded){
+            //this.refs.sv.scrollTo({x: 0, y: 0, animated: true})
+
+        }
+        // if(feedItems.length < 2){
+        //     feedItems.push((<View style={{height:this.state.dimensions.height}}/>))
+        // }
+
         return (
             <View style={{flex:1,paddingBottom:0,marginBottom:0,backgroundColor:"transparent"}}>
                 <ScrollView
@@ -68,6 +101,14 @@ class FeedComponent extends Component {
                     onContentSizeChange={this.handleSize}
                     scrollEventThrottle={16}
                     style={{backgroundColor:"#ededed"}}
+                    refreshControl={
+                      <RefreshControl
+                        refreshing={this.state.refreshing}
+                        onRefresh={this._onRefresh.bind(this)}
+                        title="Loading..."
+                        />
+                       }
+
                 >
                     {/*<View style={{flex:1,justifyContent:'center'}}><Text>Feed!</Text></View>*/}
                     {/*<View key={0}>*/}

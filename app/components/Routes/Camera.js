@@ -110,18 +110,21 @@ export default class RNCameraScreen extends React.Component {
   }
 
   takePicture = async function() {
-      console.log(this.camera)
+      //console.log(this.camera)
     if (this.camera) {
-        console.log("picture sizes",this.camera.getAvailablePictureSizes())
+        //console.log("picture sizes",this.camera.getAvailablePictureSizes())
 
       this.camera.takePictureAsync().then(data => {
-        console.log('data: ', data);
+        //console.log('data: ', data);
         this.state.photoURI = data.uri;
-        console.log('hi', this.state.photoURI);
+        //console.log('hi', this.state.photoURI);
         this.props._handlePictureTaken(this.state.photoURI);
         this.props.navigate('Picture');
       });
 
+    }
+    else{
+        this.props.navigate('Picture')
     }
   };
 
@@ -130,7 +133,7 @@ export default class RNCameraScreen extends React.Component {
       <RNCamera
         ref={ref => {
           this.camera = ref;
-          this.camera.getAvailablePictureSizes().then(({r})=>{console.log(r)})
+
         }}
         style={{
           flex: 1,

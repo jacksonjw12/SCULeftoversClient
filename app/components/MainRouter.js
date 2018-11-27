@@ -12,12 +12,25 @@ export default class MainRouter extends Component {
         super(props)
         this.state = {
             ...this.state,
-            view:"feed"
+            view:"feed",
         }
+        this.feedReload = false
         this.navigate = this.navigate.bind(this)
+        this.shouldFeedReload = this.shouldFeedReload.bind(this)
+        this.setFeedReload = this.setFeedReload.bind(this)
     }
     navigate(location){
         this.setState({view:location})
+    }
+    setFeedReload(){
+        this.feedReload = true
+    }
+    shouldFeedReload(){
+        if(this.feedReload){
+            this.feedReload = false
+            return !this.feedReload
+        }
+        return this.feedReload
     }
     renderView(){
         console.log("main rendering for",this.state.view);
@@ -27,9 +40,11 @@ export default class MainRouter extends Component {
                 <FeedRouter
                     show={this.state.view === 'feed'}
                     navigate={this.navigate}
+                    shouldFeedReload={this.shouldFeedReload}
                 />
                 <ComposeRouter
                     show={this.state.view === "compose"}
+                    setFeedReload={this.setFeedReload}
                     navigate={this.navigate}
                 />
                 <Settings

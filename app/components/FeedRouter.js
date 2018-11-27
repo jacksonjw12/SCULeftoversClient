@@ -31,6 +31,7 @@ export default class FeedRouter extends Component {
                     navigateFeed={this.navigateFeed}
                     navigate={this.props.navigate}
                     client={this.props.client}
+                    shouldFeedReload={this.props.shouldFeedReload}
                 />
 
             )

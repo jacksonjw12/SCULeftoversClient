@@ -31,7 +31,11 @@ export default class ComposeRouter extends Component {
       }
 
     _handlePictureSubmission = () => {
-        this.setState({pictureURI: ''})
+        this.props.setFeedReload()
+        this.props.navigate("feed")
+        this.setState({pictureURI: '',view:"Camera"})
+
+
     }
 
     render(){

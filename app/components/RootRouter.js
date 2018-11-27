@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Text, AsyncStorage } from 'react-native';
 import UnAuthorizedRouter from './UnAuthorizedRouter'
 import MainRouter from './MainRouter'
+import env from '../environment'
 export default class RootRouter extends Component {
     constructor(props){
         super(props)
@@ -27,7 +28,7 @@ export default class RootRouter extends Component {
     }
     login(email,password,callback){
 
-        fetch(`http://localhost:8000/login?email=${email}&password=${password}`, {
+        fetch(env.server+`/login?email=${email}&password=${password}`, {
           credentials: 'same-origin',
         })
           .then(response => response.json())
@@ -77,7 +78,7 @@ export default class RootRouter extends Component {
     }
     async handleLogout(logout){
         let client = this.props.client
-        fetch(`http://localhost:8000/logout`, {
+        fetch(env.server+`/logout`, {
           credentials: 'same-origin',
         }).then((response) => {
             console.log(response)

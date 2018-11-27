@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Button, Text, View, TextInput,AsyncStorage,TouchableOpacity,StyleSheet} from 'react-native';
-
+import env from '../../environment'
 export default class Login extends React.Component {
     constructor(props) {
         super(props)
@@ -15,7 +15,7 @@ export default class Login extends React.Component {
         //this.setState({loginPageView:"main"})
         const email = this.state.emailText
         const password = this.state.passwordText
-        fetch(`http://localhost:8000/login?email=${email}&password=${password}`, {
+        fetch(env.server+`/login?email=${email}&password=${password}`, {
           credentials: 'same-origin',
         })
           .then(response => response.json())
@@ -28,6 +28,7 @@ export default class Login extends React.Component {
                AsyncStorage.setItem('email', email)
                AsyncStorage.setItem('password', password)
                AsyncStorage.setItem('id', response.id)
+
 
                 console.log("logged in")
 

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {graphql, compose} from 'react-apollo'
 import gql from 'graphql-tag'
-
+import env from '../environment'
 // const GET_SIGNED_URL = gql`
 // {
 //     User{
@@ -36,7 +36,7 @@ class SubmitPostComponent extends React.Component {
 
     uploadImage() {
         return new Promise((resolve, reject) => {
-            fetch(`http://localhost:8000/requestImageUpload`, {
+            fetch(env.server + `/requestImageUpload`, {
                 credentials: 'same-origin',
             }).then(response => response.json())
                 .then((response) => {
@@ -75,7 +75,8 @@ class SubmitPostComponent extends React.Component {
             })
               .then((response) => {
                   console.log(response)
-                  this.props.navigate("feed")
+                  //this.props.navigate("feed")
+                  this.props.handlePost()
 
               })
         })

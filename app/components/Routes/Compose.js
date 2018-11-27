@@ -129,6 +129,7 @@ export default class Compose extends React.Component {
           <SubmitPost
             pictureURI = {this.props.pictureURI}
             navigate={this.props.navigate}
+            handlePost={this.props._handlePictureSubmission}
           />
 
         </View>

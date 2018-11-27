@@ -6,6 +6,7 @@ import { createHttpLink } from 'apollo-link-http'
 import { InMemoryCache } from 'apollo-cache-inmemory'
 import { withClientState } from 'apollo-link-state'
 import { ApolloLink } from 'apollo-link'
+import env from '../environment'
 //
 // import resolvers from './clientStateResolvers'
 // import defaults from './clientStateDefaults'
@@ -13,7 +14,7 @@ import { ApolloLink } from 'apollo-link'
 
 // import config from '../../config'
 
-const uri = `http://localhost:8000/graphql`
+const uri = env.server+`/graphql`
 const cache = new InMemoryCache(global.__APOLLO_STATE__)
 const httpLink = createHttpLink({
   uri,
