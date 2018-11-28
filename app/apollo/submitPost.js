@@ -32,6 +32,7 @@ class SubmitPostComponent extends React.Component {
         this.state = {
             ...this.state,
         }
+        this.post = {}
     }
 
     uploadImage() {
@@ -65,13 +66,26 @@ class SubmitPostComponent extends React.Component {
 
         })
     }
+    beginSubmit() {
+        this.post = this.props.getPostData()
+        if(this.post.ready){
+            this.post.data = {
+                allergens:this.post.allergens,
+                expiration:this.post.expireTime,
+                location:this.post.location
+            }
+            this.submitPost()
+            // console.log(this.post)
+            // console.log("would have submitted post")
+        }
 
+    }
     submitPost() {
         this.uploadImage().then((response) => {
             console.log(response)
             console.log("continue post upload")
             this.props.uploadPost({
-              variables: { title: "Demo Post!", pictureURL: response },
+              variables: { title: this.post.title, pictureURL: response, data:this.post.data },
             })
               .then((response) => {
                   console.log(response)
@@ -107,9 +121,9 @@ class SubmitPostComponent extends React.Component {
         return (
             <TouchableOpacity
                 style={styles.submitButton}
-                onPress={() => this.submitPost()}>
+                onPress={() => this.beginSubmit()}>
 
-                <Text style={styles.buttonText}>Submit</Text>
+                <Text style={styles.buttonText}>Post</Text>
             </TouchableOpacity>
         );
 
@@ -142,16 +156,16 @@ const styles = StyleSheet.create({
         marginTop: 10,
         paddingTop: 10,
         paddingBottom: 10,
-        backgroundColor: '#9d2235',
+        backgroundColor: 'white',
         borderRadius: 10,
         borderWidth: 1,
-        borderColor: 'gray',
+        borderColor: '#9d2235',
         bottom: 5,
         width: 100,
         height: 40
     },
     buttonText: {
-        color: '#fff',
+        color: '#9d2235',
         textAlign: 'center',
         paddingLeft: 10,
         paddingRight: 10

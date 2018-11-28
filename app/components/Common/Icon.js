@@ -53,6 +53,18 @@ export default class Icon extends React.Component {
             </View>
         )
     }
+    renderBackArrow = (size,color) => {
+        return(
+            <View style={styles.iconContainer}>
+
+            <Svg  width={48} height={48}>
+                <Path fill="none" d="M0 0h24v24H0V0z"/>
+                <Path scale={2} d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                      stroke={color} fill={color} strokeWidth={.05} />
+            </Svg>
+            </View>
+        )
+    }
     render() {
         let {icon,size,color} = this.props;
         if(color === undefined){
@@ -66,6 +78,9 @@ export default class Icon extends React.Component {
         }
         else if(icon === "settings"){
             return this.renderSettings(size,color)
+        }
+        else if(icon === "backArrow"){
+            return this.renderBackArrow(size,color)
         }
         else{
             return null

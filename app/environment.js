@@ -6,4 +6,14 @@ const env = {
 
 }
 
+
+/*
+Who we eventually need to credit
+React Native Camera
+https://github.com/mxck/react-native-material-menu
+https://github.com/n4kz/react-native-material-textfield
+Npm libraries?
+
+ */
+
 export default env
