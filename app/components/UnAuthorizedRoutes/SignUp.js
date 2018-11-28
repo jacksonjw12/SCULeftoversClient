@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, TextInput, TouchableOpacity, TouchableHighlight,Modal} from 'react-native';
 import {graphql, compose} from 'react-apollo'
 import gql from 'graphql-tag'
 
@@ -10,13 +10,20 @@ export default class SignUp extends React.Component {
         this.state = {
             ...this.state,
             emailText:"",
-            passwordText:""
+            passwordText:"",
+            displayTerms:false
 
         }
         this.signup = this.signup.bind(this)
+        this.displayTerms = this.displayTerms.bind(this)
+    }
+
+    displayTerms(shouldDisplay) {
+        this.setState({displayTerms:shouldDisplay})
     }
 
     signup() {
+        console.log('hi why')
         fetch(`http://localhost:8000/signup?email=${this.state.emailText}&password=${this.state.passwordText}`, 
         {credentials: 'same-origin'})
         .then(response => response.json())
@@ -26,9 +33,49 @@ export default class SignUp extends React.Component {
     
     render() {
         const { navigate } = this.props.navigate;
+        
         return (
             
             <View style={{flex:1}}>
+                <Modal
+                    presentationStyle="overFullScreen"
+                    transparent={true}
+                    animationType="slide"
+                    visible={this.state.displayTerms}
+                    onRequestClose={() => {
+                        Alert.alert('Modal has been closed.');
+                    }}
+                    
+                    >
+                    <View style={{flex:1, backgroundColor:'rgba(52, 52, 52, 0.8)'}}>
+                        <View style={styles.modalStyle}>
+                            <Text style={styles.titleText}>
+                                Terms and Conditions
+                            </Text>
+                            <Text style={styles.leftText}>
+                                This is a sample terms and conditions page!
+                                We are still discussing what we are legally supposed
+                                to put here.
+                            </Text>
+
+                            <TouchableOpacity
+                                onPress={()=>{this.signup()}}
+                                underlayColor='#fff'
+                                style={[styles.button,styles.largeButton,{backgroundColor:"teal"}]}
+                            >
+                                <Text style={styles.innerButton}>Sign Up!</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity
+                            onPress={()=>this.displayTerms(false)}
+                            underlayColor='#fff'
+                            style={[styles.button,styles.largeButton,{backgroundColor:"#fcc000"}]}
+                            >
+                            <Text style={styles.innerButton}>Back</Text>
+                            </TouchableOpacity>
+                        </View>
+                        </View>
+                </Modal>
                 <View style={{justifyContent: 'center', alignItems: 'center',height:"50%",marginTop:20}}>           
                     <Text style={styles.titleText}>SCU Leftovers</Text>
                     <Text style={styles.coolText}>Welcome to SCU Leftovers! To get started sharing food, sign up for an account below!</Text>
@@ -55,7 +102,9 @@ export default class SignUp extends React.Component {
                     />
 
                     <TouchableOpacity
-                        onPress={this.signup}
+                        onPress={()=>{
+                            this.displayTerms(true)
+                        }}
                         underlayColor='#fff'
                         style={[styles.button,styles.largeButton,{backgroundColor:"teal"}]}
                     >
@@ -100,17 +149,29 @@ const styles = StyleSheet.create({
         marginTop: 5,
         fontWeight: 'bold', 
         color: '#9d2235', 
-        fontSize: 36
+        fontSize: 36,
+        marginLeft: 20,
+        marginRight: 20
     },
     coolText: {
-        marginTop: 30,
+        margin: 20,
         color: '#9d2235',
         textAlign: 'center'
     },
     leftText: {
         marginTop: 30,
         color: '#9d2235',
-        textAlign: 'left'
+        textAlign: 'left',
+        margin:20
+    },
+    modalStyle: {
+        justifyContent: 'center', 
+        alignItems: 'center',
+        height:"50%",
+        marginTop:60,
+        backgroundColor:'white',
+        margin: 40,
+        opacity:1
     }
 })
 
